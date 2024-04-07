@@ -1,19 +1,31 @@
-import { GitHubBanner, Refine, WelcomePage } from "@refinedev/core";
+import {
+  ErrorComponent,
+  GitHubBanner,
+  Refine,
+} from "@refinedev/core";
 import { DevtoolsPanel, DevtoolsProvider } from "@refinedev/devtools";
 import { RefineKbar, RefineKbarProvider } from "@refinedev/kbar";
 
 import dataProvider from "@refinedev/airtable";
 import routerBindings, {
   DocumentTitleHandler,
+  NavigateToResource,
   UnsavedChangesNotifier,
 } from "@refinedev/react-router-v6";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Outlet, Route, Routes } from "react-router-dom";
+
+import { PostList } from "./pages/post/list";
+
 import "./App.css";
+import { Layout } from "./components/Layout";
+import { PostShow } from "./pages/post/show";
+import { PostCreate } from "./pages/post/create";
+import { PostEdit } from "./pages/post/edit";
 
 function App() {
   const API_TOKEN =
-    "patI3quNRP17TNsjK.d59600d5955939ed02110fb1107036ff4482496004f020f5bf031f55789cd321";
-  const BASE_ID = "appKYl1H4k9g73sBT";
+    "patcajUkU2afuCzL8.9b2cd3a5f463b29f0cda913b222d765c2bda985dd69be161b1449c6278a15ea8";
+  const BASE_ID = "appcUYy7TpTIZDZ6E";
 
   return (
     <BrowserRouter>
@@ -23,6 +35,15 @@ function App() {
           <Refine
             dataProvider={dataProvider(API_TOKEN, BASE_ID)}
             routerProvider={routerBindings}
+            resources={[
+              {
+                name: "posts",
+                list: "/posts",
+                show: "/posts/show/:id",
+                create: "/posts/create",
+                edit: "/posts/edit/:id",
+              },
+            ]}
             options={{
               syncWithLocation: true,
               warnWhenUnsavedChanges: true,
@@ -31,7 +52,25 @@ function App() {
             }}
           >
             <Routes>
-              <Route index element={<WelcomePage />} />
+              <Route
+                element={
+                  <Layout>
+                    <Outlet />
+                  </Layout>
+                }
+              >
+                <Route
+                  index
+                  element={<NavigateToResource resource="posts" />}
+                />
+                <Route path="posts">
+                  <Route index element={<PostList />} />
+                  <Route path="show/:id" element={<PostShow />} />
+                  <Route path="create" element={<PostCreate />} />
+                  <Route path="edit/:id" element={<PostEdit />} />
+                </Route>
+                <Route path="*" element={<ErrorComponent />} />
+              </Route>
             </Routes>
             <RefineKbar />
             <UnsavedChangesNotifier />
