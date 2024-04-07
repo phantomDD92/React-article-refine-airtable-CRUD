@@ -24,8 +24,8 @@ import { PostEdit } from "./pages/post/edit";
 
 function App() {
   const API_TOKEN =
-    "patcajUkU2afuCzL8.9b2cd3a5f463b29f0cda913b222d765c2bda985dd69be161b1449c6278a15ea8";
-  const BASE_ID = "appcUYy7TpTIZDZ6E";
+    "Your_API_TOKEN";
+  const BASE_ID = "Your_BASE_ID";
 
   return (
     <BrowserRouter>
