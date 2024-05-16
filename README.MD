@@ -35,12 +35,7 @@ Refine's hooks and components simplifies the development process and eliminates 
     npm run start
 ```
 
-## Learn More
-
-To learn more about **Refine**, please check out the [Documentation](https://refine.dev/docs)
-
-- **Airtable Data Provider** [Docs](https://refine.dev/docs/core/providers/auth-provider/)
-- **React Router** [Docs](https://refine.dev/docs/core/providers/router-provider/)
+Updated at May, 16
 
 ## License
 
